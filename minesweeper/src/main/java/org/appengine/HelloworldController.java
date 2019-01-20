@@ -14,16 +14,15 @@
  * limitations under the License.
  */
 
-package com.example.appengine.demos.springboot;
+package org.appengine;
 
-import org.springframework.boot.builder.SpringApplicationBuilder;
-import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-public class ServletInitializer extends SpringBootServletInitializer {
-
-  @Override
-  protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
-    return application.sources(SpringBootExampleApplication.class);
+@RestController
+public class HelloworldController {
+  @GetMapping("/")
+  public String hello() {
+    return "Minesweeper for APPENGINE";
   }
-
 }
