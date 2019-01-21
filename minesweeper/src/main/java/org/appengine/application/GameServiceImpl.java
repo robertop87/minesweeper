@@ -47,8 +47,12 @@ public class GameServiceImpl implements GameService {
   @Override
   public BoardApi play(Long cellId, GameAction gameAction) {
     switch (gameAction) {
-      case MARK_CELL: this.cellService.markCell(cellId); break;
-      case OPEN_CELL: this.cellService.openCell(cellId); break;
+      case MARK_CELL:
+        this.cellService.markCell(cellId);
+        break;
+      case OPEN_CELL:
+        this.cellService.openCell(cellId);
+        break;
       default: break;
     }
 
