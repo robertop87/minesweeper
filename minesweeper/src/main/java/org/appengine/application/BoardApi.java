@@ -20,7 +20,7 @@ import org.appengine.domain.Game;
 public class BoardApi {
 
   @ApiModelProperty(notes = "The game ID, this is unique")
-  private long gameId = 0;
+  private Long gameId = 0L;
   @ApiModelProperty(notes = "The player name")
   private String playerName = "Nobody";
   @ApiModelProperty(notes = "The list of cells for the game", dataType = "List")

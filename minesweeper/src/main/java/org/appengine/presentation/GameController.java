@@ -10,6 +10,7 @@ import org.appengine.application.GameService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -49,5 +50,12 @@ public class GameController {
   @ApiOperation(value = "Mark/unmark a cell", response = BoardApi.class)
   public BoardApi markCell(@PathVariable long id) {
     return this.gameService.play(id, GameAction.MARK_CELL);
+  }
+
+  @GetMapping(value = "/resume/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+  @ResponseBody
+  @ApiOperation(value = "Resume a previous game board", response = BoardApi.class)
+  public BoardApi resumeGame(@PathVariable long id) {
+    return this.gameService.resumeBoard(id);
   }
 }
