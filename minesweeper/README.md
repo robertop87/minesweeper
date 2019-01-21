@@ -12,6 +12,7 @@ Minesweeper App Engine
 7. Document the API using Swagger, then a client could be directly generated
 8. Each game is for a player, this is multiuser, but not registered in the system
 9. Stop the development after spent 6 hours
+10. Generate API client for Javascript using swagger-codegen-cli tool
 
 ### Missing implementation
 
@@ -23,9 +24,19 @@ Minesweeper App Engine
 
 ## Generate client with Swagger
 
-Please read the next article https://www.baeldung.com/spring-boot-rest-client-swagger-codegen
+As the project as Swagger then we can automate the client generation.
 
-The example command to 
+I used the swagger-codegen-cli (https://github.com/swagger-api/swagger-codegen) to generate a Javascript Client project
+
+To generate the code I used the next command:
+```
+java -jar swagger-codegen-cli-2.2.3.jar generate \
+  -i http://deviget-minesweeper.appspot.com/v2/api-docs \
+  -l javascript \
+  -o src/clients/javascript
+```
+
+I versioned the generated code just as example
 
 ## Testing Environment
 
