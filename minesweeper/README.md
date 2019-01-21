@@ -6,7 +6,7 @@ Minesweeper App Engine
 1. Selected SpringBoot + Appengine as stack 
 2. Used Google Appengine starter kit to base of project
 3. Defined only 2 domain entities Game and Cell
-4. Implement in-memory persistence with H2
+4. Implemented in-memory persistence with H2
 5. Ability to select the size of the board, then rows and colums are equals
 6. Added BoardApi, CellApi and GameConfigApi as API objects to interact with outside systems, in order to don't expose the internal satructure of the domain
 7. Document the API using Swagger, then a client could be directly generated
@@ -28,7 +28,7 @@ The initial implementation has no take in account boundary cases. Then this firs
 
 ## Generate client with Swagger
 
-As the project as Swagger then we can automate the client generation.
+As the project is using Swagger then we can automate the client generation.
 
 I used the swagger-codegen-cli (https://github.com/swagger-api/swagger-codegen) to generate a Javascript Client project
 
