@@ -7,6 +7,7 @@ import java.util.Random;
 import lombok.extern.java.Log;
 import lombok.val;
 import org.appengine.domain.Cell;
+import org.appengine.domain.CellStatus;
 import org.appengine.domain.Game;
 import org.appengine.persistence.CellRepository;
 import org.appengine.persistence.GameRepository;
@@ -49,7 +50,7 @@ public class GameServiceImpl implements GameService {
   }
 
   private void generateCells(Game game, int boardSize, int initRow, int initCol) {
-    List<Cell> cells = new ArrayList<>(boardSize*boardSize);
+    List<Cell> cells = new ArrayList<>(boardSize * boardSize);
     for (int row = 0; row < boardSize; row++) {
       for (int col = 0; col < boardSize; col++) {
         val cell = Cell.builder()
@@ -59,6 +60,9 @@ public class GameServiceImpl implements GameService {
             .value((initRow == row && initCol == col)
                 ? Cell.empty
                 : this.randomCellValue())
+            .status((initRow == row && initCol == col)
+                ? CellStatus.OPENED
+                : CellStatus.CLOSED)
             .build();
         cells.add(cell);
       }

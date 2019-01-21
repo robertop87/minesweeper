@@ -5,6 +5,7 @@ import static org.junit.Assert.assertEquals;
 import lombok.val;
 import org.appengine.domain.Cell;
 import org.appengine.domain.CellStatus;
+import org.appengine.persistence.CellRepository;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,12 @@ public class GameServiceTest {
 
   @Autowired
   private GameService gameService;
+
+  @Autowired
+  private CellService cellService;
+
+  @Autowired
+  private CellRepository cellRepository;
 
   @Test
   public void testCreateNewGameFirstCellIsEmpty() {
@@ -60,5 +67,85 @@ public class GameServiceTest {
   @Test
   public void testCellClosedCanBeOpened() {
     val game = this.gameService.createGame("tester", 3, 0, 0);
+    Cell testCell = this.cellRepository.save(Cell.builder()
+        .status(CellStatus.CLOSED)
+        .game(game)
+        .row(-1)
+        .col(-1)
+        .value(Cell.empty)
+        .build());
+
+    this.cellService.openCell(testCell.getId());
+
+    val result = this.cellRepository.findById(testCell.getId());
+    assertEquals(CellStatus.OPENED, result.get().getStatus());
+  }
+
+  @Test
+  public void testCellClosedCanBeMarked() {
+    val game = this.gameService.createGame("tester", 3, 0, 0);
+    Cell testCell = this.cellRepository.save(Cell.builder()
+        .status(CellStatus.CLOSED)
+        .game(game)
+        .row(-1)
+        .col(-1)
+        .value(Cell.empty)
+        .build());
+
+    this.cellService.markCell(testCell.getId());
+
+    val result = this.cellRepository.findById(testCell.getId());
+    assertEquals(CellStatus.MARKED, result.get().getStatus());
+  }
+
+  @Test
+  public void testCellMarkedCanBeOpened() {
+    val game = this.gameService.createGame("tester", 3, 0, 0);
+    Cell testCell = this.cellRepository.save(Cell.builder()
+        .status(CellStatus.MARKED)
+        .game(game)
+        .row(-1)
+        .col(-1)
+        .value(Cell.empty)
+        .build());
+
+    this.cellService.openCell(testCell.getId());
+
+    val result = this.cellRepository.findById(testCell.getId());
+    assertEquals(CellStatus.OPENED, result.get().getStatus());
+  }
+
+  @Test
+  public void testCellOpenedCannotBeMarked() {
+    val game = this.gameService.createGame("tester", 3, 0, 0);
+    Cell testCell = this.cellRepository.save(Cell.builder()
+        .status(CellStatus.OPENED)
+        .game(game)
+        .row(-1)
+        .col(-1)
+        .value(Cell.empty)
+        .build());
+
+    this.cellService.markCell(testCell.getId());
+
+    val result = this.cellRepository.findById(testCell.getId());
+    assertEquals(CellStatus.OPENED, result.get().getStatus());
+  }
+
+  @Test
+  public void testCellMarkedCanBeClosed() {
+    val game = this.gameService.createGame("tester", 3, 0, 0);
+    Cell testCell = this.cellRepository.save(Cell.builder()
+        .status(CellStatus.MARKED)
+        .game(game)
+        .row(-1)
+        .col(-1)
+        .value(Cell.empty)
+        .build());
+
+    this.cellService.markCell(testCell.getId());
+
+    val result = this.cellRepository.findById(testCell.getId());
+    assertEquals(CellStatus.CLOSED, result.get().getStatus());
   }
 }
