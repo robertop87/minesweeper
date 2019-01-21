@@ -1,5 +1,6 @@
 package org.appengine.application;
 
+import io.swagger.annotations.ApiModelProperty;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -18,8 +19,11 @@ import org.appengine.domain.Game;
 @AllArgsConstructor
 public class BoardApi {
 
+  @ApiModelProperty(notes = "The game ID, this is unique")
   private long gameId = 0;
+  @ApiModelProperty(notes = "The player name")
   private String playerName = "Nobody";
+  @ApiModelProperty(notes = "The list of cells for the game", dataType = "List")
   private List<CellApi> cells = new ArrayList<>(0);
 
   public static BoardApi mapFrom(Game game, List<Cell> cells) {
