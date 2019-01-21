@@ -1,25 +1,28 @@
 package org.appengine.application;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.appengine.domain.Cell;
 import org.appengine.domain.Game;
 
-@Data
+@Getter
+@Setter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
 public class BoardApi {
 
-  private long gameId;
-  private String playerName;
-  private List<CellApi> cells;
+  private long gameId = 0;
+  private String playerName = "Nobody";
+  private List<CellApi> cells = new ArrayList<>(0);
 
-  private BoardApi mapFrom(Game game, List<Cell> cells) {
+  public static BoardApi mapFrom(Game game, List<Cell> cells) {
     return BoardApi.builder()
         .gameId(game.getId())
         .playerName(game.getPlayerName())

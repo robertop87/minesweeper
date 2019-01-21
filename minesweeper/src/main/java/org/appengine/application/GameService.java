@@ -1,15 +1,14 @@
 package org.appengine.application;
 
-import java.util.List;
-import java.util.Optional;
-import org.appengine.domain.Cell;
 import org.appengine.domain.Game;
 
 public interface GameService {
 
   Game createGame(String playerName, int boardSize, int initRow, int initCol);
 
-  Optional<Cell> getCellBy(Long gameId, int row, int col);
+  BoardApi newBoard(GameConfigApi gameConfigApi);
 
-  List<Cell> getCells(Long gameId);
+  BoardApi play(Long cellId, GameAction gameAction);
+
+  BoardApi resumeBoard(Long gameId);
 }

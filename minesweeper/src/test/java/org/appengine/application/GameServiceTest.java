@@ -1,6 +1,7 @@
 package org.appengine.application;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
 
 import lombok.val;
 import org.appengine.domain.Cell;
@@ -27,16 +28,16 @@ public class GameServiceTest {
   private CellRepository cellRepository;
 
   @Test
-  public void testCreateNewGameFirstCellIsEmpty() {
+  public void testCreateNewGameFirstCellIsNotMine() {
     val game = this.gameService.createGame("tester", 9, 4, 4);
-    val firstCellValue = this.gameService.getCellBy(game.getId(), 4, 4);
-    assertEquals(Cell.empty, firstCellValue.get().getValue());
+    val firstCellValue = this.cellService.getCellBy(game.getId(), 4, 4);
+    assertNotEquals(Cell.mine, firstCellValue.get().getValue());
   }
 
   @Test
   public void testCreateNewGameFirstCellIsOpened() {
     val game = this.gameService.createGame("tester", 9, 4, 4);
-    val firstCellValue = this.gameService.getCellBy(game.getId(), 4, 4);
+    val firstCellValue = this.cellService.getCellBy(game.getId(), 4, 4);
     assertEquals(CellStatus.OPENED, firstCellValue.get().getStatus());
   }
 
@@ -44,7 +45,7 @@ public class GameServiceTest {
   public void testNewGameShouldHaveEnoughCellForBoardSizeBegginer() {
     val boardSize = 3;
     val game = this.gameService.createGame("tester", boardSize, 0, 0);
-    val numberOfCells = this.gameService.getCells(game.getId()).size();
+    val numberOfCells = this.cellService.getCells(game.getId()).size();
     assertEquals(boardSize*boardSize, numberOfCells);
   }
 
@@ -52,7 +53,7 @@ public class GameServiceTest {
   public void testNewGameShouldHaveEnoughCellForBoardSizeBasic() {
     val boardSize = 6;
     val game = this.gameService.createGame("tester", boardSize, 0, 0);
-    val numberOfCells = this.gameService.getCells(game.getId()).size();
+    val numberOfCells = this.cellService.getCells(game.getId()).size();
     assertEquals(boardSize*boardSize, numberOfCells);
   }
 
@@ -60,7 +61,7 @@ public class GameServiceTest {
   public void testNewGameShouldHaveEnoughCellForBoardSizeIntermediate() {
     val boardSize = 9;
     val game = this.gameService.createGame("tester", boardSize, 0, 0);
-    val numberOfCells = this.gameService.getCells(game.getId()).size();
+    val numberOfCells = this.cellService.getCells(game.getId()).size();
     assertEquals(boardSize*boardSize, numberOfCells);
   }
 
@@ -68,7 +69,7 @@ public class GameServiceTest {
   public void testNewGameShouldHaveEnoughCellForBoardSizeExpert() {
     val boardSize = 15;
     val game = this.gameService.createGame("tester", boardSize, 0, 0);
-    val numberOfCells = this.gameService.getCells(game.getId()).size();
+    val numberOfCells = this.cellService.getCells(game.getId()).size();
     assertEquals(boardSize*boardSize, numberOfCells);
   }
 

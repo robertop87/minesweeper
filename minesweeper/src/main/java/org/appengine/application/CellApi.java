@@ -2,17 +2,20 @@ package org.appengine.application;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.appengine.domain.Cell;
 import org.appengine.domain.CellStatus;
 
-@Data
+@Getter
+@Setter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
 public class CellApi {
 
+  private long id;
   private int row;
   private int column;
   private CellStatus status;
@@ -20,6 +23,7 @@ public class CellApi {
 
   public static CellApi mapFrom(Cell cell) {
     return CellApi.builder()
+        .id(cell.getId())
         .row(cell.getRow())
         .column(cell.getCol())
         .status(cell.getStatus())
