@@ -22,6 +22,10 @@ Minesweeper App Engine
 - Time tracking (should be control by clients and register on the system)
 - Ability to choose number of mines
 
+### Known issues
+
+The initial implementation has no take in account boundary cases. Then this first presentation only happy paths are working as expected.
+
 ## Generate client with Swagger
 
 As the project as Swagger then we can automate the client generation.
