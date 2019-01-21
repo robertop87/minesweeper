@@ -19,8 +19,12 @@ public class CellServiceImpl implements CellService {
   public void markCell(Long cellId) {
     this.repository.findById(cellId).ifPresent(cell -> {
       switch (cell.getStatus()) {
-        case CLOSED: cell.setStatus(CellStatus.MARKED); break;
-        case MARKED: cell.setStatus(CellStatus.CLOSED); break;
+        case CLOSED:
+          cell.setStatus(CellStatus.MARKED);
+          break;
+        case MARKED:
+          cell.setStatus(CellStatus.CLOSED);
+          break;
         default: break;
       }
       this.repository.save(cell);
@@ -31,7 +35,9 @@ public class CellServiceImpl implements CellService {
   public void openCell(Long cellId) {
     this.repository.findById(cellId).ifPresent(cell -> {
       switch (cell.getStatus()) {
-        case CLOSED: case MARKED: cell.setStatus(CellStatus.OPENED); break;
+        case CLOSED: case MARKED:
+          cell.setStatus(CellStatus.OPENED);
+          break;
         default: break;
       }
       this.repository.save(cell);

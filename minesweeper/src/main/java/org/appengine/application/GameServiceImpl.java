@@ -67,6 +67,7 @@ public class GameServiceImpl implements GameService {
         cells.add(cell);
       }
     }
+    this.countAdjacentMines(cells);
     this.cellRepository.saveAll(cells);
     log.info(String.format("New Board %s", cells));
   }
@@ -74,4 +75,38 @@ public class GameServiceImpl implements GameService {
   private String randomCellValue() {
     return this.random.nextBoolean() ? Cell.empty : Cell.mine;
   }
+
+  private void countAdjacentMines(List<Cell> cells) {
+    for (Cell cell: cells) {
+      if (cell.getValue().equals(Cell.empty)) {
+        int mineCounter = 0;
+        for (int ri = -1; ri <= 1; ri++) {
+          for (int ci = -1; ci <= 1; ci++) {
+            if (this.queryCellValueByPosition(cells,
+                cell.getRow() + ri, cell.getCol() + ci)
+                .equals(Cell.mine)) {
+              mineCounter++;
+            }
+          }
+        }
+        if (mineCounter > 0) {
+          cell.setValue(Integer.toString(mineCounter));
+        }
+      }
+    }
+  }
+
+  private String queryCellValueByPosition(List<Cell> cells, int row, int col) {
+    if (row < 0 || col < 0) {
+      return Cell.empty;
+    }
+
+    return cells.stream()
+        .filter(c -> c.getRow() == row)
+        .filter(c -> c.getCol() == col)
+        .findFirst()
+        .map(c -> c.getValue())
+        .orElse(Cell.empty);
+  }
 }
+

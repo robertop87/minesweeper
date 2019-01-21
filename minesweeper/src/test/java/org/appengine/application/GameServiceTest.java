@@ -41,6 +41,14 @@ public class GameServiceTest {
   }
 
   @Test
+  public void testNewGameShouldHaveEnoughCellForBoardSizeBegginer() {
+    val boardSize = 3;
+    val game = this.gameService.createGame("tester", boardSize, 0, 0);
+    val numberOfCells = this.gameService.getCells(game.getId()).size();
+    assertEquals(boardSize*boardSize, numberOfCells);
+  }
+
+  @Test
   public void testNewGameShouldHaveEnoughCellForBoardSizeBasic() {
     val boardSize = 6;
     val game = this.gameService.createGame("tester", boardSize, 0, 0);
