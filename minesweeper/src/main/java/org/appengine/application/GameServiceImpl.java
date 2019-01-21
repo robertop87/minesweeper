@@ -43,6 +43,11 @@ public class GameServiceImpl implements GameService {
     return this.cellRepository.getCell(gameId, row, col);
   }
 
+  @Override
+  public List<Cell> getCells(Long gameId) {
+    return this.cellRepository.getCells(gameId);
+  }
+
   private void generateCells(Game game, int boardSize, int initRow, int initCol) {
     List<Cell> cells = new ArrayList<>(boardSize*boardSize);
     for (int row = 0; row < boardSize; row++) {

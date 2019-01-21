@@ -1,5 +1,6 @@
 package org.appengine.persistence;
 
+import java.util.List;
 import java.util.Optional;
 import org.appengine.domain.Cell;
 import org.springframework.data.jpa.repository.Query;
@@ -16,4 +17,8 @@ public interface CellRepository extends CrudRepository<Cell, Long> {
       @Param("gameId") long gameId,
       @Param("row") int row,
       @Param("col") int col);
+
+  @Query(value = "SELECT c FROM Cell c JOIN FETCH c.game g "
+      + "WHERE g.id = :gameId")
+  List<Cell> getCells(@Param("gameId") long gameId);
 }

@@ -24,4 +24,28 @@ public class GameServiceTest {
     val firstCellValue = this.gameService.getCellBy(game.getId(), 4, 4);
     assertEquals(Cell.empty, firstCellValue.get().getValue());
   }
+
+  @Test
+  public void testNewGameShouldHaveEnoughCellForBoardSizeBasic() {
+    val boardSize = 6;
+    val game = this.gameService.createGame("tester", boardSize, 0, 0);
+    val numberOfCells = this.gameService.getCells(game.getId()).size();
+    assertEquals(boardSize*boardSize, numberOfCells);
+  }
+
+  @Test
+  public void testNewGameShouldHaveEnoughCellForBoardSizeIntermediate() {
+    val boardSize = 9;
+    val game = this.gameService.createGame("tester", boardSize, 0, 0);
+    val numberOfCells = this.gameService.getCells(game.getId()).size();
+    assertEquals(boardSize*boardSize, numberOfCells);
+  }
+
+  @Test
+  public void testNewGameShouldHaveEnoughCellForBoardSizeExpert() {
+    val boardSize = 15;
+    val game = this.gameService.createGame("tester", boardSize, 0, 0);
+    val numberOfCells = this.gameService.getCells(game.getId()).size();
+    assertEquals(boardSize*boardSize, numberOfCells);
+  }
 }
