@@ -8,10 +8,12 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 @Data
 @Entity
 @Builder
+@ToString
 @AllArgsConstructor
 @NoArgsConstructor
 public class Game {
@@ -21,4 +23,8 @@ public class Game {
   private Long id;
 
   private String playerName;
+
+  public Game(String playerName) {
+    this.playerName = playerName;
+  }
 }

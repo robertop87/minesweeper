@@ -1,6 +1,9 @@
 package org.appengine.application;
 
+import static org.junit.Assert.assertEquals;
+
 import lombok.val;
+import org.appengine.domain.Cell;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +20,8 @@ public class GameServiceTest {
 
   @Test
   public void testCreateNewGameFirstCellIsEmpty() {
-    val game = this.gameService.createGame("tester", 4, 4);
-    this.gameService.getCellValue(game.getId(), 4, 4);
+    val game = this.gameService.createGame("tester", 9, 4, 4);
+    val firstCellValue = this.gameService.getCellBy(game.getId(), 4, 4);
+    assertEquals(Cell.empty, firstCellValue.get().getValue());
   }
 }
