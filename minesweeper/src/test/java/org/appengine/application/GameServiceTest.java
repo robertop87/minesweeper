@@ -4,6 +4,7 @@ import static org.junit.Assert.assertEquals;
 
 import lombok.val;
 import org.appengine.domain.Cell;
+import org.appengine.domain.CellStatus;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +24,13 @@ public class GameServiceTest {
     val game = this.gameService.createGame("tester", 9, 4, 4);
     val firstCellValue = this.gameService.getCellBy(game.getId(), 4, 4);
     assertEquals(Cell.empty, firstCellValue.get().getValue());
+  }
+
+  @Test
+  public void testCreateNewGameFirstCellIsOpened() {
+    val game = this.gameService.createGame("tester", 9, 4, 4);
+    val firstCellValue = this.gameService.getCellBy(game.getId(), 4, 4);
+    assertEquals(CellStatus.OPENED, firstCellValue.get().getStatus());
   }
 
   @Test
@@ -47,5 +55,10 @@ public class GameServiceTest {
     val game = this.gameService.createGame("tester", boardSize, 0, 0);
     val numberOfCells = this.gameService.getCells(game.getId()).size();
     assertEquals(boardSize*boardSize, numberOfCells);
+  }
+
+  @Test
+  public void testCellClosedCanBeOpened() {
+    val game = this.gameService.createGame("tester", 3, 0, 0);
   }
 }

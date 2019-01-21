@@ -1,6 +1,5 @@
 package org.appengine.domain;
 
-
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -40,6 +39,8 @@ public class Cell {
   private int col;
 
   private String value;
+
+  private CellStatus status = CellStatus.CLOSED;
 
   @ManyToOne(fetch = FetchType.LAZY)
   private Game game;
